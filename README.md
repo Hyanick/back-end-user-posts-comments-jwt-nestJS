@@ -71,3 +71,7 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](LICENSE).
+
+- Pour envoyer les mails, utiliser un serveur de mail
+  1- npm i nodemailer  npm i -D @types/nodemailer
+  2- pour l'exécutable : Mailer hog github: https://github.com/mailhog/MailHog/releases/v1.0.0
