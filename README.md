@@ -84,3 +84,7 @@ II- Pour la partie signin (Au niveau du token JWT)
 
 III- Reset Password
   1- npm i speakeasy et npm i -D @types/speakeasy : pour générer des codes automatiquement
+
+IV- Suppression de compte
+  1- Il faut une route sécurisée par un token valide: Il faut installer un package qui permet de décrypter un token jwt
+      -- npm install --save @nestjs/passport passport et npm install --save-dev @types/passport-local

@@ -1,9 +1,12 @@
-import { Body, Controller, Post } from '@nestjs/common';
-import { SignupDto } from './dto/signupDto';
+import { Body, Controller, Delete, Post, Req, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { SigninDto } from './dto/signinDto';
-import { ResetPasswordDemandDto } from './dto/resetPasswordDemandDto';
 import { ResetPasswordConfirmationDto } from './dto/resetPasswordConfirmationDto';
+import { ResetPasswordDemandDto } from './dto/resetPasswordDemandDto';
+import { SigninDto } from './dto/signinDto';
+import { SignupDto } from './dto/signupDto';
+import { AuthGuard } from '@nestjs/passport';
+import { Request } from 'express';
+import { DeleteAccountDto } from './dto/deleteAccountDto';
 
 @Controller('auth')
 export class AuthController {
@@ -27,5 +30,12 @@ export class AuthController {
     @Post('reset-password-confirmation')
     resetPasswordConfirmation(@Body() resetPasswordConfirmationDto: ResetPasswordConfirmationDto) {
         return this.authService.resetPasswordConfirmation(resetPasswordConfirmationDto);
+    }
+
+    @UseGuards(AuthGuard('jwt'))
+    @Delete('delete')
+    deleteAccount(@Req() request: Request, @Body() deleteAccountDto: DeleteAccountDto) { // @Req permet de récupérer une requete venant de l'extérieur
+        const userId = request.user['userId'];
+        return this.authService.deleteAccount(userId, deleteAccountDto)
     }
 }

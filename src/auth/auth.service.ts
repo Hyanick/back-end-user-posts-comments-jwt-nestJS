@@ -9,6 +9,7 @@ import { JwtService } from '@nestjs/jwt/dist';
 import { ConfigService } from '@nestjs/config/dist';
 import { ResetPasswordDemandDto } from './dto/resetPasswordDemandDto';
 import { ResetPasswordConfirmationDto } from './dto/resetPasswordConfirmationDto';
+import { DeleteAccountDto } from './dto/deleteAccountDto';
 
 @Injectable()
 export class AuthService {
@@ -113,5 +114,18 @@ export class AuthService {
         })
 
         return { data: 'password updated' }
+    }
+
+    async deleteAccount(userId: number, deleteAccountDto: DeleteAccountDto) {
+        const { password } = deleteAccountDto;
+        const user = await this.prismaService.user.findUnique({where: {userId: userId}});
+        // Si pas d'utilisateur
+        if (!user) throw new NotFoundException('User not found');
+        // ** Comparer le mot passe saisi et celui présent en BDD
+        const match = await bcrypt.compare(password, user.password);
+        // Si les mots de passe ne correspondent pas
+        if (!match) throw new UnauthorizedException('email or password does not match ')
+        await this.prismaService.user.delete({ where: { userId } });
+        return {data: 'user successfully deleted'}
     }
 }
