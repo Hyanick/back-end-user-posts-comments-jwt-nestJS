@@ -11,10 +11,36 @@ datasource db {
 }
 
 model User {
-  userId   Int      @id @default(autoincrement())
-  username String   @db.VarChar(65)
-  email    String   @db.VarChar(255) @unique
-  password String   @db.VarChar(255)
-  createAt DateTime @default(now())
-  updateAt DateTime @updatedAt
+  userId   Int       @id @default(autoincrement())
+  username String    @db.VarChar(65)
+  email    String    @unique @db.VarChar(255)
+  password String    @db.VarChar(255)
+  createAt DateTime  @default(now())
+  updateAt DateTime  @updatedAt
+  Posts    Post[]    @relation("user_posts")
+  comments comment[] @relation("user_comments")
+}
+
+model Post {
+  postId   Int       @id @default(autoincrement())
+  title    String    @db.VarChar(255)
+  body     String
+  // ** Un user peut avoir 1 ou +sieurs posts
+  userId   Int
+  // ** user_posts : nom de la clé étrangère
+  // ** fields: champ sur lequel s'appliquera la clé étrangère
+  // ** references: reférence dans la table de relation
+  // ** onUpdate : Cascade (contrainte): Lors de la mise à jour de User, on met à jour ces posts
+  // ** onDelete : Cascade (contrainte):Lors de la suppression d'un user, on supprime toutes ses publications
+  user     User      @relation("user_posts", fields: [userId], references: [userId], onUpdate: Cascade, onDelete: Cascade)
+  comments comment[] @relation("post_comments")
+}
+
+model comment {
+  commendId Int    @id @default(autoincrement())
+  content   String @db.VarChar(255)
+  postId    Int
+  userId    Int
+  post      Post   @relation("post_comments", fields: [postId], references: [postId], onUpdate: Cascade, onDelete: Cascade)
+  user      User   @relation("user_comments", fields: [userId], references: [userId], onUpdate: Cascade, onDelete: Cascade)
 }
