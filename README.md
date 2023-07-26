@@ -81,3 +81,6 @@ I-  SIGNUP
 
 II- Pour la partie signin (Au niveau du token JWT)
   1- npm i --save @nestjs/jwt passport-jwt et npm i --save-dev @types/passport-jwt 
+
+III- Reset Password
+  1- npm i speakeasy et npm i -D @types/speakeasy : pour générer des codes automatiquement
