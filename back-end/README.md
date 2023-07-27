@@ -88,3 +88,10 @@ III- Reset Password
 IV- Suppression de compte
   1- Il faut une route sécurisée par un token valide: Il faut installer un package qui permet de décrypter un token jwt
       -- npm install --save @nestjs/passport passport et npm install --save-dev @types/passport-local
+
+*************************** TIPS ******************************
+En cas de problème lors de la modification du schéma prisma avec les erreurs suivantes:
+- The table `(not available)` does not exist in the current database.
+- The column `(not available)` does not exist in the current database.
+
+faire un 'npx prisma migrate dev et npx prisma db push' avec le serveur arrêté

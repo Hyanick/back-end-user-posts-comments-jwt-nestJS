@@ -10,12 +10,12 @@ CREATE TABLE "Post" (
 
 -- CreateTable
 CREATE TABLE "comment" (
-    "commendId" SERIAL NOT NULL,
+    "commentId" SERIAL NOT NULL,
     "content" VARCHAR(255) NOT NULL,
     "postId" INTEGER NOT NULL,
     "userId" INTEGER NOT NULL,
 
-    CONSTRAINT "comment_pkey" PRIMARY KEY ("commendId")
+    CONSTRAINT "comment_pkey" PRIMARY KEY ("commentId")
 );
 
 -- AddForeignKey
