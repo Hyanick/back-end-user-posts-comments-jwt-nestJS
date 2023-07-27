@@ -1,4 +1,4 @@
-import { Controller, Post, UseGuards, Body, Req } from '@nestjs/common';
+import { Controller, Post, UseGuards, Body, Req, Delete, Param, ParseIntPipe } from '@nestjs/common';
 import { CommentService } from './comment.service';
 import { AuthGuard } from '@nestjs/passport';
 import { CreateCommentDto } from './dto/createCommentDto';
@@ -12,7 +12,18 @@ export class CommentController {
     @Post('create')
     create(@Body() createCommentDto: CreateCommentDto, @Req() request: Request) {
         const userId = request.user['userId'];
-       return  this.commentService.create(createCommentDto, userId);
+        return this.commentService.create(createCommentDto, userId);
+    }
+
+    @UseGuards(AuthGuard('jwt'))
+    @Delete('delete/:id')
+    delete(
+        @Param('id', ParseIntPipe) commentId: number,
+        @Req() request: Request,
+        @Body('postId') postId: number
+    ) {
+        const userId: number = request.user['userId'];
+        return this.commentService.delete(commentId, userId, postId);
 
     }
 }
