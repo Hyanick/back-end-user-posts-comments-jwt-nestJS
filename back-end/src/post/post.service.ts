@@ -2,6 +2,7 @@ import { ForbiddenException, Injectable, NotFoundException, UnauthorizedExceptio
 import { CreatePostDto } from './dto/createPostDto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { DeletePostDto } from './dto/deletePostDto';
+import { UpdatePostDto } from './dto/updatePostDto';
 
 @Injectable()
 export class PostService {
@@ -52,8 +53,22 @@ export class PostService {
         // ** Vérifier l'identité de celui qui essaie de supprimer le post
         if (post.userId !== userId) throw new ForbiddenException('Forbidden action: Vous n\'êtes pas l\'auteur du post')
 
-        await this.prismaService.post.delete({ where: { postId, userId } });
+        await this.prismaService.post.delete({ where: { postId } });
         return { data: 'post successfully deleted' }
+    }
 
+    async update(updatePostDto: UpdatePostDto, postId: number, userId: number) {
+        // ** Vérifier que la publication existe
+        const post = await this.prismaService.post.findUnique({ where: { postId } });
+        if (!post) throw new NotFoundException('Post not found');
+        /*
+                // ** Vérifier que le user est connecté
+                const user = await this.prismaService.*/
+
+        // ** Vérifier l'identité de celui qui essaie de supprimer le post
+        if (post.userId !== userId) throw new ForbiddenException('Forbidden action: Vous n\'êtes pas l\'auteur du post')
+
+        await this.prismaService.post.update({ where: { postId }, data: { ...updatePostDto } });
+        return { data: 'post successfully updated' }
     }
 }
