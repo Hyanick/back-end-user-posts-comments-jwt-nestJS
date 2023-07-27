@@ -41,8 +41,8 @@ export class PostService {
     }
     async create(createPostDto: CreatePostDto, userId: number) {
         const { title, body } = createPostDto;
-        await this.prismaService.post.create({ data: { body, title, userId } });
-        return { data: 'post created' }
+        await this.prismaService.post.create({ data: { ...createPostDto, userId } });
+        return { data: `post ${title} created `}
     }
 
     async delete(postId: number, userId: number) {
@@ -59,7 +59,7 @@ export class PostService {
 
     async update(updatePostDto: UpdatePostDto, postId: number, userId: number) {
         // ** Vérifier que la publication existe
-        const post = await this.prismaService.post.findUnique({ where: { postId } });
+        const post = await this.prismaService.post.findUnique({ where: { postId } }); 
         if (!post) throw new NotFoundException('Post not found');
         /*
                 // ** Vérifier que le user est connecté
