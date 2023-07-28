@@ -23,9 +23,11 @@ export class CommentService {
 
 
   async delete(commentId: number, userId: number, postId: number) {
+    console.log('postId connect', postId);
     // ** Vérifier que le comment existe
     const comment = await this.prismaService.comment.findUnique({ where: { commentId } });
     if (!comment) throw new NotFoundException('comment not found');
+    console.log('comment.postId connect', comment.postId);
 
     // ** Vérifier si le comment appartient à un post
     if (comment.postId !== postId) throw new UnauthorizedException('Post id does not match');
@@ -37,6 +39,24 @@ export class CommentService {
     await this.prismaService.comment.delete({ where: { commentId } });
 
     return { data: `Comment was deleted successfully by ${userId}` }
+  }
 
+  async update(commentId: number, userId: number, updateCommentDto: CreateCommentDto) {
+    const { content, postId } = updateCommentDto
+    console.log('postId connect', postId);
+
+    // ** Vérifier que le comment existe
+    const comment = await this.prismaService.comment.findUnique({ where: { commentId } });
+    if (!comment) throw new NotFoundException('Comment not found');
+
+    console.log('comment.postId connect', comment.postId);
+
+    if (comment.postId !== postId) throw new UnauthorizedException('Post id does not match');
+
+    if (comment.userId !== userId) throw new ForbiddenException('Fobidden action: Vous n\êtes l\'auteur de ce commentaire');
+
+    await this.prismaService.comment.update({ where: { commentId }, data: { content } });
+
+    return { data: 'comment successfully updated' }
   }
 }
