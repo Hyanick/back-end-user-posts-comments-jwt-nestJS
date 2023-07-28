@@ -72,22 +72,22 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 
 Nest is [MIT licensed](LICENSE).
 ## Lien vers la vidéo *** https://www.youtube.com/watch?v=QPLaYMh8bdw ***
-## I-  SIGNUP
-  # I-1 
+# I-  SIGNUP
+  ## I-1 
     $ 1- pour crypter le mot de passe du user: npm i bcript et npm i @types/bcript
-  # I-2 Pour envoyer les mails, utiliser un serveur de mail
+  ## I-2 Pour envoyer les mails, utiliser un serveur de mail
     1- npm i nodemailer  npm i -D @types/nodemailer
     2- pour l'exécutable : Mailer hog github: https://github.com/mailhog/MailHog/releases/v1.0.0
 
-## II- Pour la partie signin (Au niveau du token JWT)
+# II- Pour la partie signin (Au niveau du token JWT)
   1- npm i --save @nestjs/jwt passport-jwt et npm i --save-dev @types/passport-jwt 
 
-## III- Reset Password
+# III- Reset Password
   1- npm i speakeasy et npm i -D @types/speakeasy : pour générer des codes automatiquement
 
 ## IV- Suppression de compte
   1- Il faut une route sécurisée par un token valide: Il faut installer un package qui permet de décrypter un token jwt
-      -- npm install --save @nestjs/passport passport et npm install --save-dev @types/passport-local
+  - npm install --save @nestjs/passport passport et npm install --save-dev @types/passport-local
 
 ## V - Partie documentation: Swagger
 - npm install --save @nestjs/swagger 
@@ -107,4 +107,4 @@ En cas de problème lors de la modification du schéma prisma avec les erreurs s
 - The table `(not available)` does not exist in the current database.
 - The column `(not available)` does not exist in the current database.
 
-faire un 'npx prisma migrate dev et npx prisma db push' avec le serveur arrêté
+  - faire un 'npx prisma migrate dev et npx prisma db push' avec le serveur arrêté
