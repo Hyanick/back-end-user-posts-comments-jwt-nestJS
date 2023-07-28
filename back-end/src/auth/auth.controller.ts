@@ -1,13 +1,15 @@
 import { Body, Controller, Delete, Post, Req, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { ResetPasswordConfirmationDto } from './dto/resetPasswordConfirmationDto';
-import { ResetPasswordDemandDto } from './dto/resetPasswordDemandDto';
-import { SigninDto } from './dto/signinDto';
-import { SignupDto } from './dto/signupDto';
+import { ResetPasswordConfirmationDto } from './dto/resetPasswordConfirmation.dto';
+import { ResetPasswordDemandDto } from './dto/resetPasswordDemand.dto';
+import { SigninDto } from './dto/signin.dto';
+import { SignupDto } from './dto/signup.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { Request } from 'express';
-import { DeleteAccountDto } from './dto/deleteAccountDto';
+import { DeleteAccountDto } from './dto/deleteAccount.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('authentification')
 @Controller('auth')
 export class AuthController {
     constructor(private readonly authService: AuthService) { }

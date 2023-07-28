@@ -71,7 +71,7 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](LICENSE).
-
+*********************** https://www.youtube.com/watch?v=QPLaYMh8bdw ***********************
 I-  SIGNUP
   I-1 
     1- pour crypter le mot de passe du user: npm i bcript et npm i @types/bcript
@@ -88,6 +88,19 @@ III- Reset Password
 IV- Suppression de compte
   1- Il faut une route sécurisée par un token valide: Il faut installer un package qui permet de décrypter un token jwt
       -- npm install --save @nestjs/passport passport et npm install --save-dev @types/passport-local
+
+V - Partie documentation: Swagger
+- npm install --save @nestjs/swagger 
+- Rajouter la configuration dans le fichier main.ts
+- Pour séparer les différents controleur, on peut ajouter le décorateur "@ApiTags('nom_controlleur')"
+- Pour afficher les propriètes des dto, on a 2 possibilités:
+    - Rajouter '@ApiProperty()' au niveau de chaque propriété du DTO
+    - Ou rajouter ceci:   "plugins": ["@nestjs/swagger"] au niveau de l'objet "compilerOptions" du fichier nest-cli.json
+    - NB: 
+        - il faut au prélable que le dto soient bien nommés, exple: signin.dto.ts
+        - Penser également à arrêter le serveur et supprimer le dossier "dist" et relancer le serveur après
+
+- Pour spécifier visuellement qu'un(e) controller/méthode est protégé, il faut rajouter le décorateur "@ApiBearerAuth()" soit au niveau du controlleur ou au niveau de la méthode
 
 *************************** TIPS ******************************
 En cas de problème lors de la modification du schéma prisma avec les erreurs suivantes:

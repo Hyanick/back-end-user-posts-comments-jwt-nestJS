@@ -1,11 +1,12 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Req, UseGuards } from '@nestjs/common';
-import { PostService } from './post.service';
 import { AuthGuard } from '@nestjs/passport';
-import { CreatePostDto } from './dto/createPostDto';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Request } from 'express';
-import { DeletePostDto } from './dto/deletePostDto';
-import { UpdatePostDto } from './dto/updatePostDto';
+import { CreatePostDto } from './dto/createPost.dto';
+import { UpdatePostDto } from './dto/updatePost.dto';
+import { PostService } from './post.service';
 
+@ApiTags('Posts')
 @Controller('posts')
 export class PostController {
     constructor(private readonly postService: PostService) { }
@@ -14,7 +15,7 @@ export class PostController {
     getAll() {
         return this.postService.getAll();
     }
-
+    @ApiBearerAuth()
     @UseGuards(AuthGuard('jwt'))
     @Post('create')
     create(
@@ -24,7 +25,7 @@ export class PostController {
         const userId = request.user['userId']; // ** userId du user connecté
         return this.postService.create(createPostDto, userId);
     }
-
+    @ApiBearerAuth()
     @UseGuards(AuthGuard('jwt'))
     @Delete('delete/:id') // ** /:id permet d'avoir un id dynamique
     delete(
@@ -36,7 +37,7 @@ export class PostController {
         // return this.postService.delete(deletePostDto, userId);
         return this.postService.delete(postId, userId);
     }
-
+    @ApiBearerAuth()
     @UseGuards(AuthGuard('jwt'))
     @Put('update/:id') // ** /:id permet d'avoir un id dynamique
     update(

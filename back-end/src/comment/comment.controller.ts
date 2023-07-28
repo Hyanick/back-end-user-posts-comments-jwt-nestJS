@@ -2,8 +2,11 @@ import { Body, Controller, Delete, Param, ParseIntPipe, Post, Put, Req, UseGuard
 import { AuthGuard } from '@nestjs/passport';
 import { Request } from 'express';
 import { CommentService } from './comment.service';
-import { CreateCommentDto } from './dto/createCommentDto';
+import { CreateCommentDto } from './dto/createComment.dto';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+@ApiBearerAuth()
+@ApiTags('comments')
 @Controller('comments')
 export class CommentController {
     constructor(private readonly commentService: CommentService) { }

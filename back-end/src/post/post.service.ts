@@ -1,8 +1,8 @@
 import { ForbiddenException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
-import { CreatePostDto } from './dto/createPostDto';
+import { CreatePostDto } from './dto/createPost.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { DeletePostDto } from './dto/deletePostDto';
-import { UpdatePostDto } from './dto/updatePostDto';
+import { DeletePostDto } from './dto/deletePost.dto';
+import { UpdatePostDto } from './dto/updatePost.dto';
 
 @Injectable()
 export class PostService {
