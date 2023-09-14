@@ -5,4 +5,6 @@ export class SigninDto {
     readonly  email: string;
     @IsNotEmpty()
     readonly password: string;
+
+    readonly lastDateConnexion?: Date
 }

@@ -8,17 +8,26 @@ datasource db {
 }
 
 model User {
-  userId   Int       @id @default(autoincrement())
-  username String    @db.VarChar(65)
-  email    String    @unique @db.VarChar(255)
-  password String    @db.VarChar(255)
-  passwordConfirm String    @db.VarChar(255)
-  createAt DateTime  @default(now())
-  updateAt DateTime  @updatedAt
+  userId            Int       @id @default(autoincrement())
+  username          String    @db.VarChar(65)
+  email             String    @unique @db.VarChar(255)
+  password          String    @db.VarChar(255)
+  passwordConfirm   String    @db.VarChar(255)
+  firstName         String    @db.VarChar(255)
+  lastName          String    @db.VarChar(255)
+  birthDay          String    @db.VarChar(255)
+  birthCountry      String    @db.VarChar(255)
+  gender            String    @db.VarChar(255)
+  adress            String    @db.VarChar(255)
+  adressComplement  String    @db.VarChar(255)
+  city              String    @db.VarChar(255)
+  zipCode           String    @db.VarChar(255)
+  phone             String    @db.VarChar(255)
   lastDateConnexion DateTime
-  comments Comment[] @relation("user_comments")
-  Posts    Post[]    @relation("user_posts")
-  
+  createAt          DateTime  @default(now())
+  updateAt          DateTime  @updatedAt
+  comments          Comment[] @relation("user_comments")
+  Posts             Post[]    @relation("user_posts")
 }
 
 model Post {
