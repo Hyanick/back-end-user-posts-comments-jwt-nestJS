@@ -14,7 +14,13 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
   /*Permet l'activation de la validation de manière globale*/
-  app.useGlobalPipes(new ValidationPipe())
+  app.useGlobalPipes(new ValidationPipe());
+  app.enableCors(
+    { 
+      origin: ['http://localhost:4200'],
+      methods: ['POST']
+    }
+  );
   await app.listen(3000);
 }
 bootstrap();

@@ -12,10 +12,13 @@ model User {
   username String    @db.VarChar(65)
   email    String    @unique @db.VarChar(255)
   password String    @db.VarChar(255)
+  passwordConfirm String    @db.VarChar(255)
   createAt DateTime  @default(now())
   updateAt DateTime  @updatedAt
+  lastDateConnexion DateTime
   comments Comment[] @relation("user_comments")
   Posts    Post[]    @relation("user_posts")
+  
 }
 
 model Post {

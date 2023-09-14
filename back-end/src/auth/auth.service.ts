@@ -23,15 +23,16 @@ export class AuthService {
         return await this.prismaService.user.findUnique({ where: { email } })
     }
     async signup(signupDto: SignupDto) {
-        const { email, password, username } = signupDto;
+        const { email, password, username, passwordConfirm, lastDateConnexion } = signupDto;
         // ** Vérifier si l'utilisateur est déjà inscrit
         const user = await this.checkEmailExist(email);
         if (user) throw new ConflictException('User already exits');
         // ** Hasher le mot de passe: Utilisation du package 'bcrypt': npm i bcrypt et npm i -D @types/bcrypt
+        if(password !== passwordConfirm) throw new ConflictException('Les 2 mots de passe ne sont pas identiques')
         const hash = await bcrypt.hash(password, 10);
         // ** Enregistrer l'utilisateur dans la base de données
         await this.prismaService.user.create({
-            data: { email, username, password: hash },
+            data: { email, username,  password: hash, passwordConfirm:hash, lastDateConnexion: new Date()},
         })
         // ** Envoyer un email de confirmation
         await this.mailerService.sendSignupConfiguration(email, username);
@@ -66,7 +67,8 @@ export class AuthService {
             token,
             user: {
                 username: user.username,
-                email: user.email
+                email: user.email ,
+                lastDateConnexion: user.lastDateConnexion     
             }
         }
     }

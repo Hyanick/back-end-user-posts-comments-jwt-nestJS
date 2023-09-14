@@ -13,4 +13,8 @@ export class SignupDto {
     @ApiProperty()
     @IsNotEmpty()
     readonly password: string
+    @IsNotEmpty()
+    readonly passwordConfirm: string
+
+    readonly lastDateConnexion?: Date
 }
